@@ -1,0 +1,2 @@
+UPDATE session SET s_model_file='12.fbx',
+		s_activity='model_uploaded_1' WHERE s_id='12'
