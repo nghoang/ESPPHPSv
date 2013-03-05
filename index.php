@@ -47,8 +47,17 @@ elseif ($_GET["act"] == 'ClientJoin')
 {
 	ClientJoin($_POST["sid"]);
 }
+elseif ($_GET["act"] == "GetSemantic")
+{
+	echo GetSemantic($_GET["sid"]);
+}
+elseif ($_GET["act"] == "SetSemantic")
+{
+	SetSemantic($_POST["sid"],$_POST["semantic"]);
+}
 elseif ($_GET["act"] == 'ClientSendModelFile')
 {
+	//var_dump($_FILES);exit;
 	ClientSendModelFile($_GET["sid"],$_FILES["building"]["tmp_name"]);
 }
 elseif ($_GET["act"] == 'ClientSendSemanticFile')
@@ -75,6 +84,18 @@ elseif ($_GET["act"] == 'DownloadSemanticBack')
 //===================================================
 //===================================================
 //===================================================
+
+function GetSemantic($sid)
+{
+	$query = mysql_query("SELECT * FROM session WHERE s_id='{$sid}'");
+	$row = mysql_fetch_array($query);
+	return $row["s_semantic_file"];
+}
+
+function SetSemantic($sid,$semantic)
+{
+	mysql_query("UPDATE session SET s_semantic_file='{$semantic}' WHERE s_id='{$sid}'");
+}
 
 function DownloadSemanticBack($sid)
 {
